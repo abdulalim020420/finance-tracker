@@ -1,0 +1,53 @@
+services:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: finance_app
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - finance_net
+
+  db:
+    image: postgres:16
+    container_name: finance_db
+    environment:
+      POSTGRES_DB: finance_tracker
+      POSTGRES_USER: finance_user
+      POSTGRES_PASSWORD: secret123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - finance_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: finance_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - finance_net
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:latest
+    container_name: finance_dbeaver
+    ports:
+      - "8978:8978"
+    networks:
+      - finance_net
+
+networks:
+  finance_net:
+    driver: bridge
+
+volumes:
+  pgdata:
