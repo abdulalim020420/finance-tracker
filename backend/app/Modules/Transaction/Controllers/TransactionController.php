@@ -3,8 +3,8 @@
 namespace App\Modules\Transaction\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Shared\Response\ApiResponse;
-use App\Modules\Transaction\Request\StoreTransactionRequest;
+use App\Modules\Shared\Responses\ApiResponse;
+use App\Modules\Transaction\Requests\StoreTransactionRequest;
 use App\Modules\Transaction\Request\UpdateTransactionRequest;
 use App\Modules\Transaction\Services\TransactionService;
 use Illuminate\Http\JsonResponse;
@@ -19,10 +19,18 @@ class TransactionController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $filter = $request->only(['category_id', 'type', 'date_from', 'date_to']);
-        $transaction = $this->transactionService->getAll($request->user()->id, $filter);
+        $filters = $request->only(['category_id', 'type', 'date_from', 'date_to']);
+        $transactions = $this->transactionService->getAll($request->user()->id, $filters);
         
-        return ApiResponse::success($transaction, 'Transaction Retrieved');
+        return ApiResponse::success([
+            'transactions' => $transactions->items(),
+            'pagination' => [
+                'current_page' => $transactions->currentPage(),
+                'last_page' => $transactions->lastPage(),
+                'per_page' => $transactions->perPage(),
+                'total' => $transactions->total()
+            ],    
+        ], 'Transaction retrieved');
     }
 
     public function store(StoreTransactionRequest $request): JsonResponse

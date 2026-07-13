@@ -14,7 +14,7 @@ class UpdateTransactionRequest extends FormRequest
     public function rules():array
     {
         return [
-            'category_id' => ['sometimes', 'integer', 'exist:category,id'],
+            'category_id' => ['sometimes', 'integer', 'exist:categories,id'],
             'amount' => ['sometimes', 'numeric', 'min:0.01'],
             'description' => ['nullable', 'string', 'max:255'],
             'date' => ['sometimes', 'date']

@@ -6,7 +6,7 @@ use App\Modules\Category\Models\Category;
 use App\Modules\Category\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use App\Modules\Shared\Response\ApiResponse;
+use App\Modules\Shared\Responses\ApiResponse;
 
 class CategoryService
 {
@@ -37,7 +37,7 @@ class CategoryService
     public function delete (int $id, int $userId) : void
     {
         $category = $this->findOrFail($id, $userId);
-        return $this->categoryRepository->delete($category);
+        $this->categoryRepository->delete($category);
     }
 
     public function findOrFail(int $id, int $userId): Category

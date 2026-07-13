@@ -5,16 +5,18 @@ namespace App\Modules\Transaction\Services;
 
 use App\Modules\Transaction\Repositories\Interfaces\TransactionRepositoryInterface;
 use App\Modules\Category\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Modules\Shared\Response\ApiResponse;
+use App\Modules\Shared\Responses\ApiResponse;
 use App\Modules\Transaction\Models\Transaction;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Modules\Dashboard\Services\DashboardService;
 
 class TransactionService
 {
     public function __construct(
         private readonly TransactionRepositoryInterface $transactionRepository,
-        private readonly CategoryRepositoryInterface $categoryRepository
+        private readonly CategoryRepositoryInterface $categoryRepository,
+        private readonly DashboardService $dashboardService,
     ){}
 
     public function getAll (int $userId, array $filters) : LengthAwarePaginator
@@ -26,10 +28,14 @@ class TransactionService
     {
         $this->validateCategoryOwnership($data['category_id'], $userId);
     
-        return $this->transactionRepository->create([
-            ...$data,
-            'user_id' => $userId
-        ]);
+        $transaction = $this->transactionRepository->create([
+                ...$data,
+                'user_id' => $userId
+            ]);
+
+        $this->dashboardService->clearCache($userId, substr($data['date'], 0, 7));
+
+        return $transaction;
     }
 
     public function update (int $id, array $data, int $userId) : Transaction
@@ -39,13 +45,20 @@ class TransactionService
         if (!empty($data['category_id'])) {
             $this->validateCategoryOwnership($data['category_id'], $userId);
         }
-        return $this->transactionRepository->update($transaction, $data);
+        
+        $updated = $this->transactionRepository->update($transaction, $data);
+    
+        $this->dashboardService->clearCache($userId, $transaction->date->format('Y-m'));
+    
+        return $updated;
+
     }
 
     public function delete (int $id, int $userId) : void
     {
         $transaction = $this->findOrFail($id, $userId);
         $this->transactionRepository->delete($transaction);
+        $this->dashboardService->clearCache($userId, $transaction->date->format('Y-m'));
     }
 
 

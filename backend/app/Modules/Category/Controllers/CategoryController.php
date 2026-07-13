@@ -8,7 +8,7 @@ use App\Modules\Category\Requests\UpdateCategoryRequest;
 use App\Modules\Category\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Modules\Shared\Response\ApiResponse;
+use App\Modules\Shared\Responses\ApiResponse;
 
 class CategoryController extends Controller
 {

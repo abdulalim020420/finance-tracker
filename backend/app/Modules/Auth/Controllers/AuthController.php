@@ -32,7 +32,7 @@ class AuthController extends Controller {
 
     public function logout(Request $request): JsonResponse
     {
-        $this->authService->logout($request);
+        $this->authService->logout($request->user());
 
         return ApiResponse::success(null, 'Logged out successfully');
     }

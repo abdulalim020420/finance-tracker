@@ -22,8 +22,8 @@ class Transaction extends Model
     ];
 
     protected $casts = [
-        'amout' => 'decimal:2',
-        'date' => 'date',
+        'amount' => 'decimal:2',
+        'date' => 'date:Y-m-d',
     ];
 
     public function user() : BelongsTo
