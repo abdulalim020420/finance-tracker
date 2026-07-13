@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Shared\Response;
+namespace App\Modules\Shared\Responses;
 
 use Illuminate\Http\JsonResponse;
 
@@ -15,12 +15,12 @@ class ApiResponse
         ], $status);
     }
 
-    public static function error(mixed $data = null, string $message = 'Error', int $status = 400) : JsonResponse
+    public static function error(string $message = 'Error', int $status = 400, mixed $errors = null) : JsonResponse
     {
         return response()->json([
             'success' => false,
             'message' => $message,
-            'data' => $data,
+            'errors' => $errors,
         
         ], $status);
     }

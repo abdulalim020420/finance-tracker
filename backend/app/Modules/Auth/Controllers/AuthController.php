@@ -7,7 +7,7 @@ use App\Modules\Auth\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use App\Modules\Auth\Requests\LoginRequest;
 use App\Modules\Auth\Requests\RegisterRequest;
-use App\Modules\Shared\Response\ApiResponse;
+use App\Modules\Shared\Responses\ApiResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller {
