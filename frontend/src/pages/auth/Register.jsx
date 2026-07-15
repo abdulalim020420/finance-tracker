@@ -66,7 +66,7 @@ export default function Register() {
                 value={form.name}
                 onChange={handleChange}
                 className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                placeholder="Abdul Alim"
+                placeholder="Enter Full Name"
                 required
               />
             </div>
