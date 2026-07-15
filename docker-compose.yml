@@ -46,6 +46,7 @@ services:
       - finance_net
 
   frontend:
+    user: "${UID}:${GID}"
     image: node:22-bullseye
     container_name: finance_frontend
     working_dir: /app

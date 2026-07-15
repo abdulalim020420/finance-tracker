@@ -15,7 +15,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:income,expenses'],
+            'type' => ['required', 'in:income,expense'],
             'icon' => ['nullable', 'string', 'max:50'],
             'color' => ['nullable', 'string', 'max:7'],
         ];
