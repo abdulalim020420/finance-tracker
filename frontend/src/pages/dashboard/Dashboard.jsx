@@ -11,13 +11,28 @@ export default function Dashboard() {
   const [loading, setLoading]   = useState(true)
   const [month, setMonth]       = useState(() => new Date().toISOString().slice(0, 7))
 
+
   useEffect(() => {
-    setLoading(true)
-    dashboardApi.getSummary(month)
-      .then((res) => setSummary(res.data.data))
-      .catch(console.error)
-      .finally(() => setLoading(false))
-  }, [month])
+    let cancelled = false
+
+    const fetchSummary = async () => {
+      if (!cancelled) setLoading(true)
+      try {
+        const res = await dashboardApi.getSummary(month)
+        if (!cancelled) {
+          setSummary(res.data.data)
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    fetchSummary()
+
+    return () => { cancelled = true }
+}, [month])
 
   return (
     <div>
@@ -25,13 +40,13 @@ export default function Dashboard() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Dashboard</h1>
-          <p className="text-slate-500 text-sm mt-1">Your financial overview</p>
+          <p className="text-slate-500 text-sm mt-1 hidden md:block">Your financial overview</p>
         </div>
         <input
           type="month"
           value={month}
           onChange={(e) => setMonth(e.target.value)}
-          className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-auto max-w-[160px]"
         />
       </div>
 

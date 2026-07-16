@@ -16,15 +16,33 @@ export default function Categories() {
   const [saving, setSaving]         = useState(false)
   const [error, setError]           = useState('')
 
-  const fetchCategories = () => {
-    setLoading(true)
-    categoriesApi.getAll()
-      .then((res) => setCategories(res.data.data))
-      .catch(console.error)
-      .finally(() => setLoading(false))
+  const fetchCategories = async () => {
+  try {
+    const res = await categoriesApi.getAll()
+    setCategories(res.data.data)
+  } catch (err) {
+    console.error(err)
   }
+}
 
-  useEffect(() => { fetchCategories() }, [])
+  useEffect(() => {
+    let cancelled = false
+
+    const fetch = async () => {
+      try {
+        const res = await categoriesApi.getAll()
+        if (!cancelled) setCategories(res.data.data)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    fetch()
+
+    return () => { cancelled = true }
+  }, [])
 
   const openCreate = () => {
     setEditing(null)

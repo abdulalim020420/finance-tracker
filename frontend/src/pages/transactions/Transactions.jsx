@@ -18,22 +18,56 @@ export default function Transactions() {
   const [page, setPage]                 = useState(1)
   const [filters, setFilters]           = useState({ type: '', category_id: '' })
 
-  const fetchTransactions = () => {
-    setLoading(true)
-    transactionsApi.getAll({ page, ...filters })
-      .then((res) => {
-        setTransactions(res.data.data.transactions)
-        setPagination(res.data.data.pagination)
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false))
+  const fetchTransactions = async () => {
+  try {
+    const res = await transactionsApi.getAll({ page, ...filters })
+    setTransactions(res.data.data.transactions)
+    setPagination(res.data.data.pagination)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+  // Initial transactions fetch + refetch on page/filter change
+  useEffect(() => {
+    let cancelled = false
+
+    const fetch = async () => {
+      try {
+        const res = await transactionsApi.getAll({ page, ...filters })
+        if (!cancelled) {
+          setTransactions(res.data.data.transactions)
+          setPagination(res.data.data.pagination)
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    fetch()
+
+    return () => { cancelled = true }
+  }, [page, filters])
+
+// Categories fetch
+useEffect(() => {
+  let cancelled = false
+
+  const fetch = async () => {
+    try {
+      const res = await categoriesApi.getAll()
+      if (!cancelled) setCategories(res.data.data)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
-  useEffect(() => { fetchTransactions() }, [page, filters])
+  fetch()
 
-  useEffect(() => {
-    categoriesApi.getAll().then((res) => setCategories(res.data.data))
-  }, [])
+  return () => { cancelled = true }
+}, [])
 
   const openCreate = () => {
     setEditing(null)
@@ -79,11 +113,6 @@ export default function Transactions() {
     }
   }
 
-  const getCategoryType = (categoryId) => {
-    const cat = categories.find((c) => c.id === Number(categoryId))
-    return cat?.type
-  }
-
   return (
     <div>
       {/* Header */}
@@ -125,7 +154,7 @@ export default function Transactions() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden overflow-x-auto">
         {loading ? (
           <div className="text-center text-slate-400 py-20">Loading...</div>
         ) : transactions.length === 0 ? (
