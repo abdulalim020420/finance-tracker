@@ -16,7 +16,7 @@ A full-stack personal finance management application built with Laravel 12 and R
 - Dashboard with analytics and charts
 - Monthly financial overview
 - Redis caching for dashboard performance
-- Responsive design (Mobile responsive in progress)
+- Responsive design
 
 ---
 
@@ -133,7 +133,7 @@ DELETE /api/v1/transactions/{id}
 
 ### Dashboard
 ```
-GET    /api/v1/dashboard/summary?month=2026-07
+GET    /api/v1/dashboard/summary?month={params},
 ```
 
 ---
