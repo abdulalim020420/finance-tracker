@@ -24,9 +24,9 @@ function SidebarContent({ user, onLogout, onClose }) {
       {/* Logo */}
       <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200">
         <div className="flex items-center gap-2">
-          <div className="bg-emerald-500 p-1.5 rounded-lg">
+          {/*<div className="bg-emerald-500 p-1.5 rounded-lg">
             <TrendingUp className="text-white" size={18} />
-          </div>
+          </div> */}
           <span className="font-bold text-slate-800">FinanceTracker</span>
         </div>
         <button
