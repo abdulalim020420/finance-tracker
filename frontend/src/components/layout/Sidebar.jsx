@@ -91,9 +91,9 @@ export default function Sidebar() {
       {/* Mobile hamburger topbar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="bg-emerald-500 p-1.5 rounded-lg">
+          {/*<div className="bg-emerald-500 p-1.5 rounded-lg">
             <TrendingUp className="text-white" size={16} />
-          </div>
+          </div>*/}
           <span className="font-bold text-slate-800 text-sm">FinanceTracker</span>
         </div>
         <button
