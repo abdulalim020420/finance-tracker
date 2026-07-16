@@ -154,3 +154,12 @@ GET    /api/v1/dashboard/summary?month={params},
 **Abdul Alim Abdulamirudin**
 - GitHub: [@abdulalim020420](https://github.com/abdulalim020420)
 - LinkedIn: [linkedin.com/in/abdul-alim-abdulamirudin-927861299](https://linkedin.com/in/abdul-alim-abdulamirudin-927861299)
+
+
+---
+Appendix / Demo
+![Login Page](./readmeAssets/loginPage.png)
+![Dashboard Demo](./readmeAssets/dashboardDemo.png)
+![Mobile Demo](./readmeAssets/mobileDemo.png)
+![Category Demo](./readmeAssets/categoryDemo.png)
+![Transaction Demo](./readmeAssets/transactionDemo.png)
