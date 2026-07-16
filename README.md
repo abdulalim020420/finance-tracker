@@ -165,7 +165,7 @@ GET    /api/v1/dashboard/summary?month={params},
 **Dashboard**
 ![Dashboard Demo](./readmeAssets/dashboardDemo.png)
 
-**Mobile View**
+**Mobile View**<br>
 ![Mobile Demo](./readmeAssets/mobileDemo.png)
 
 **Category**
