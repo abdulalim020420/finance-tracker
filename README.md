@@ -2,10 +2,10 @@
 
 A full-stack personal finance management application built with Laravel 12 and React.
 
-🔗 **Live Demo:** https://finance-tracker-one-beige-25.vercel.app 
-📦 **Backend API:** https://finance-tracker-api-59io.onrender.com
+ - 🔗 **Live Demo:** https://finance-tracker-one-beige-25.vercel.app 
+ - 📦 **Backend API:** https://finance-tracker-api-59io.onrender.com
 
-🚨 **Important Disclaimer:** Backend hosted on Render free tier — first load may take 30 seconds to wake up.
+🚨 **Important Disclaimer:** Backend hosted on Render free tier — first load may take 30 seconds to wake up. 🚨
 ---
 
 ## Features
@@ -157,9 +157,19 @@ GET    /api/v1/dashboard/summary?month={params},
 
 
 ---
-Appendix / Demo
+## Appendix / Demo
+
+**Login Page**
 ![Login Page](./readmeAssets/loginPage.png)
+
+**Dashboard**
 ![Dashboard Demo](./readmeAssets/dashboardDemo.png)
+
+**Mobile View**
 ![Mobile Demo](./readmeAssets/mobileDemo.png)
+
+**Category**
 ![Category Demo](./readmeAssets/categoryDemo.png)
+
+**Transaction**
 ![Transaction Demo](./readmeAssets/transactionDemo.png)
